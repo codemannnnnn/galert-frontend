@@ -6,6 +6,7 @@ import axios from "axios";
 //components
 import { Header } from "./components/Header.js";
 import { Cards } from "./components/Cards.js";
+import { Flatlist } from "./components/Flatlist.js";
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -29,22 +30,23 @@ export default function App() {
   }, []);
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Header />
-        <Text>
-          {isLoading ? (
-            "Loading..."
-          ) : (
-            <Text>
-              <Cards data={data.reverse()} />{" "}
-            </Text>
-          )}
-        </Text>
+    //<ScrollView>
+    <View style={styles.container}>
+      <Header />
+      <Text>
+        {isLoading ? (
+          "Loading..."
+        ) : (
+          <Flatlist data={data.reverse()} />
+          // <Text>
+          //   <Cards data={data.reverse()} />{" "}
+          // </Text>
+        )}
+      </Text>
 
-        <StatusBar style="auto" />
-      </View>
-    </ScrollView>
+      <StatusBar style="auto" />
+    </View>
+    //</ScrollView>
   );
 }
 
