@@ -1,10 +1,16 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { Menu } from "./Menu.js";
 
 export const Header = () => {
   return (
     <View>
-      <Text style={style.header}>Gun Alert</Text>
+      <View>
+        <Text style={style.header}>Gun Alert</Text>
+      </View>
+      <View>
+        <Menu />
+      </View>
     </View>
   );
 };

@@ -13,21 +13,29 @@ const auth = {
   },
 };
 
-const pull = async () => {
-  const fetchIt = async (url) => {
-    const { data } = await axios.get(url, auth);
-    return cheerio.load(data);
-  };
-  const $ = await fetchIt(link);
+axios
+  .get(
+    "https://www.armslist.com/posts/13614252/bozeman-montana-reloading-for-sale--212-grain-eld-x"
+  )
+  .then((res) => {
+    console.log(res.headers);
+  });
 
-  const itemInfo = $(".container-fluid")
-    .find(".row")
-    .find(".col-md-6")
-    .find(".text-holder")
-    .find(".postContent")
-    .text();
+// const pull = async () => {
+//   const fetchIt = async (url) => {
+//     const { data } = await axios.get(url, auth);
+//     return cheerio.load(data);
+//   };
+//   const $ = await fetchIt(link);
 
-  return console.log(itemInfo);
-};
+//   const itemInfo = $(".container-fluid")
+//     .find(".row")
+//     .find(".col-md-6")
+//     .find(".text-holder")
+//     .find(".postContent")
+//     .text();
 
-pull();
+//   return console.log(itemInfo);
+// };
+
+// pull();

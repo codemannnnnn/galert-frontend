@@ -12,10 +12,15 @@ import {
   TouchableWithoutFeedback,
   Linking,
 } from "react-native";
+// import FontAwesome, {
+//   SolidIcons,
+//   RegularIcons,
+//   BrandIcons,
+// } from "react-native-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import cheerio, { load } from "cheerio";
 import axios from "axios";
-
-import { GetDescription } from "./GetDescription";
 
 //bring in the data for testing
 //import { data } from "../dummyData/arms.js";
@@ -36,37 +41,71 @@ export const Flatlist = ({ data }) => {
           {"\n"}
           {location.trim()}
           {"\n"}
-          <Text style={{ fontSize: 12 }}>{time}</Text>
-          {"\n"}
-          <Text onPress={() => Linking.openURL(item.link)}>More info</Text>
+          <View style={styles.splitem}>
+            <View>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: "#fff",
+                  paddingTop: 4,
+                  fontStyle: "italic",
+                }}
+              >
+                {time}
+              </Text>
+              <View style={{ position: "relative", top: 10 }}>
+                <Text
+                  onPress={() => Linking.openURL(item.link)}
+                  style={{ padding: 10 }}
+                >
+                  <FontAwesomeIcon
+                    icon={faExternalLinkAlt}
+                    style={{ color: "#fff" }}
+                  />
+                </Text>
+              </View>
+            </View>
+
+            <View>
+              <TouchableOpacity onPress={() => handleMore(item)}>
+                <Text style={styles.info}>
+                  {curItem === item.id
+                    ? loading
+                      ? "Show More"
+                      : "Show Less"
+                    : "Show More"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <Text>
+            {loading ? (
+              ""
+            ) : curItem === item.id ? (
+              <Text style={styles.description}>
+                {"\n"}
+                {item.description}
+              </Text>
+            ) : (
+              ""
+            )}
+          </Text>
         </Text>
-        <Image source={{ uri: image }} style={styles.image} />
+
+        <View style={styles.imgBox}>
+          <Image source={{ uri: image }} style={styles.image} />
+        </View>
       </View>
     );
   };
 
-  const Button = (item) => {
-    return (
-      <>
-        <TouchableWithoutFeedback onPress={() => getMoreInfo(item)}>
-          <Text>Load more up</Text>
-        </TouchableWithoutFeedback>
-        <Text>
-          {infoLoading ? (
-            ""
-          ) : (
-            <Text styles={styles.body}>
-              {" "}
-              {item.id === curItem ? <GetDescription link={item.link} /> : ""}
-              {/* {console.log({ item })}
-              {console.log({ curItem })} */}
-              {/* {item.time}
-              {console.log(item.id)} */}
-            </Text>
-          )}
-        </Text>
-      </>
-    );
+  const handleMore = async (item) => {
+    setCurItem(item.id);
+    // setMoreInfo(itemInfo);
+    {
+      loading ? setLoading(false) : setLoading(true);
+    }
   };
 
   const renderItem = ({ item }) => {
@@ -124,22 +163,40 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#fff",
   },
+  // imgBox: {
+  //   width: "auto",
+  //   height: "auto",
+  // },
   image: {
-    height: 180,
-    width: 335.6,
-    resizeMode: "contain",
-    flex: 1,
-    justifyContent: "center",
-    marginTop: 10,
+    width: undefined,
+    height: 230,
+    resizeMode: "cover",
+    marginTop: 6,
     marginLeft: -10,
     marginRight: -10,
     marginBottom: -10,
-    overflow: "hidden",
     borderBottomRightRadius: 6,
     borderBottomLeftRadius: 6,
   },
   count: {
     fontSize: 100,
     color: "black",
+  },
+  description: {},
+  info: {
+    borderColor: "#fff",
+    borderWidth: 1,
+    borderRadius: 6,
+    padding: 6,
+    position: "relative",
+    bottom: 15,
+    color: "#fff",
+  },
+  splitem: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginBottom: -6,
   },
 });
