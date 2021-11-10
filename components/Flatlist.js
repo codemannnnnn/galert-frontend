@@ -21,6 +21,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import cheerio, { load } from "cheerio";
 import axios from "axios";
+import { useFonts } from "expo-font";
 
 //bring in the data for testing
 //import { data } from "../dummyData/arms.js";
@@ -30,6 +31,13 @@ export const Flatlist = ({ data }) => {
   const [moreInfo, setMoreInfo] = useState("");
   const [curItem, setCurItem] = useState("");
   const [loading, setLoading] = useState(true);
+  const [loaded] = useFonts({
+    main: require("../assets/fonts/main.ttf"),
+    bold: require("../assets/fonts/Oxygen-Bold.ttf"),
+  });
+  if (!loaded) {
+    return null;
+  }
 
   const Item = ({ title, price, location, time, image, item }) => {
     return (
@@ -123,10 +131,6 @@ export const Flatlist = ({ data }) => {
     );
   };
 
-  const footerComp = () => {
-    return <Text>Footer Baby</Text>;
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -134,7 +138,6 @@ export const Flatlist = ({ data }) => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         initialNumToRender={3}
-        ListFooterComponent={footerComp}
       />
     </SafeAreaView>
   );
@@ -158,10 +161,12 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "800",
     color: "#fff",
+    fontFamily: "main",
   },
   body: {
     fontSize: 16,
     color: "#fff",
+    fontFamily: "main",
   },
   // imgBox: {
   //   width: "auto",
@@ -169,7 +174,7 @@ const styles = StyleSheet.create({
   // },
   image: {
     width: undefined,
-    height: 230,
+    height: 200,
     resizeMode: "cover",
     marginTop: 6,
     marginLeft: -10,
@@ -191,6 +196,7 @@ const styles = StyleSheet.create({
     position: "relative",
     bottom: 15,
     color: "#fff",
+    fontFamily: "bold",
   },
   splitem: {
     display: "flex",

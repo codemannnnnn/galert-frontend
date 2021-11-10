@@ -32,7 +32,9 @@ export default function App() {
   return (
     //<ScrollView>
     <View style={styles.container}>
-      <Header />
+      <View style={styles.header}>
+        <Header />
+      </View>
       <Text>
         {isLoading ? (
           "Loading..."
@@ -65,9 +67,11 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
   },
   header: {
-    // display: "flex",
-    // justifyContent: "center",
+    display: "flex",
+    justifyContent: "center",
     alignItems: "center",
     margin: "auto",
+    width: "100%",
+    zIndex: 10,
   },
 });
