@@ -7,6 +7,10 @@ import axios from "axios";
 import { Header } from "./components/Header.js";
 import { Cards } from "./components/Cards.js";
 import { Flatlist } from "./components/Flatlist.js";
+import { Login } from "./components/Login.js";
+
+//auth
+import { authMiddleware } from "./utils/auth.js";
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -34,6 +38,9 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Header />
+      </View>
+      <View>
+        <Login />
       </View>
       <Text>
         {isLoading ? (

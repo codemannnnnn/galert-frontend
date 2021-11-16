@@ -111,9 +111,8 @@ export const Flatlist = ({ data }) => {
   const handleMore = async (item) => {
     setCurItem(item.id);
     // setMoreInfo(itemInfo);
-    {
-      loading ? setLoading(false) : setLoading(true);
-    }
+
+    loading ? setLoading(false) : setLoading(true);
   };
 
   const renderItem = ({ item }) => {

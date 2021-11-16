@@ -27,10 +27,12 @@
     "node-fetch": "^3.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-hook-form": "^7.19.5",
     "react-native": "0.64.2",
     "react-native-elements": "^3.4.2",
     "react-native-fontawesome": "^7.0.0",
     "react-native-icons": "^0.7.1",
+    "react-native-keychain": "^8.0.0",
     "react-native-web": "0.17.1"
   },
   "devDependencies": {
