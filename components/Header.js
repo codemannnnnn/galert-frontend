@@ -11,7 +11,7 @@ import { useFonts } from "expo-font";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-export const Header = () => {
+export const Header = ({ userInfo }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [loaded] = useFonts({
     main: require("../assets/fonts/main.ttf"),
@@ -46,7 +46,7 @@ export const Header = () => {
           <Text style={style.header}>Gun Alert</Text>
         </View>
         <View>
-          <Menu />
+          <Menu username={userInfo} />
         </View>
       </View>
 

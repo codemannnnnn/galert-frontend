@@ -4,18 +4,52 @@ import { Button } from "react-native-elements/dist/buttons/Button";
 
 import { authMiddleware } from "../utils/auth.js";
 
+import * as Keychain from "react-native-keychain";
+import * as SecureStore from "expo-secure-store";
+import axios from "axios";
+
+//global state
+
 export const Login = () => {
   const [authToken, setAuthToken] = useState({});
   const [userName, setUserName] = useState("");
   const [pass, setPass] = useState("");
+  const [userToken, setUserToken] = useState("");
 
-  const handleSubmit = (us, pw) => {
+  //vars
+  const loginUrl = "https://galert-backend.herokuapp.com/auth/login";
+  const handleSubmit = async (us, pw) => {
     const creds = {
       username: us,
       password: pw,
     };
-    return authMiddleware(creds);
+    await axios
+      .post(loginUrl, creds)
+      .then((res) => {
+        setUserToken(res.data.token);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+    return saveUserCreds(creds, userToken);
   };
+
+  async function saveUserCreds(creds, token) {
+    const { username, password } = creds;
+    const usernameAndToken = `${username}, ${token}`;
+    await SecureStore.setItemAsync(username, usernameAndToken);
+  }
+
+  async function getUserCreds(key) {
+    let result = await SecureStore.getItemAsync(key);
+    if (result) {
+      alert("🔐 Here's your value 🔐 \n" + result);
+    } else {
+      alert("No values stored under that key.");
+    }
+  }
+  console.log(userToken);
+  //   getUserCreds(userName);
 
   return (
     <View>
@@ -32,6 +66,7 @@ export const Login = () => {
       ></TextInput>
       <View style={style.button}>
         <Button title="Submit" onPress={() => handleSubmit(userName, pass)} />
+        <Button title="Show password" onPress={() => getUserCreds(userName)} />
       </View>
     </View>
   );
@@ -48,6 +83,12 @@ const style = StyleSheet.create({
     borderColor: "#3a454c",
   },
   button: {
-    backgroundColor: "black",
+    height: 40,
+    width: 300,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 6,
+    borderColor: "#3a454c",
   },
 });

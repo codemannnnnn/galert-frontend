@@ -9,7 +9,7 @@ import {
 import { MenuView } from "@react-native-menu/menu";
 import { useFonts } from "expo-font";
 
-export const Menu = () => {
+export const Menu = ({ username }) => {
   const [showMenu, setShowMenu] = useState(true);
   const [loaded] = useFonts({
     main: require("../assets/fonts/main.ttf"),
@@ -41,6 +41,9 @@ export const Menu = () => {
       ) : (
         <View>
           <View style={styles.modal}>
+            <TouchableOpacity>
+              <Text style={styles.modalText}>{`Hello, ${username}`}</Text>
+            </TouchableOpacity>
             <TouchableOpacity>
               <Text style={styles.modalText}>Favorites</Text>
             </TouchableOpacity>

@@ -1,9 +1,11 @@
 import * as Keychain from "react-native-keychain";
 
 export const authMiddleware = async (creds) => {
-  const { username, password } = creds;
-  console.log(username);
-  console.log(password);
+  //   const { username, password } = creds;
+  //   console.log(username);
+  //   console.log(password);
+  const username = "cody";
+  const password = "pass";
 
   // Store the credentials
   await Keychain.setGenericPassword(username, password);
@@ -21,5 +23,5 @@ export const authMiddleware = async (creds) => {
   } catch (error) {
     console.log("Keychain couldn't be accessed!", error);
   }
-  await Keychain.resetGenericPassword();
+  //   await Keychain.resetGenericPassword();
 };
